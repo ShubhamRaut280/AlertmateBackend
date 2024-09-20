@@ -1,6 +1,13 @@
 const express = require('express')
+const {connectToDb} = require('./connection.js')
+require('dotenv').config()
 const app = express();
-const PORT = 3000 
 
-app.listen(3000, ()=>console.log("server started"))
+
+connectToDb(process.env.DB_URL)
+
+app.use(express.urlencoded({ extended: false }))
+
+
+app.listen(process.env.PORT, () => console.log("server started"))
 
