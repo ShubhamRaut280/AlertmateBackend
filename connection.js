@@ -8,4 +8,5 @@ async function connectToDb(url){
     }
 }
 
+
 module.exports = {connectToDb}
