@@ -3,6 +3,7 @@ const {connectToDb} = require('./connection.js')
 require('dotenv').config()
 const app = express();
 
+// console.clear()
 
 connectToDb(process.env.DB_URL)
 
