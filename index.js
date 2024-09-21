@@ -26,8 +26,6 @@ app.get('/locations', async (req, res) => {
 
     console.log('decoded id : ', decode)
 
-    // const user = await User.findOne({ _id: decode })
-    // console.log("User is : ", user)
     }catch(err){
         console.log(err)
         res.status(400).json({"msg" : "something went wrong", 'error' : err})
