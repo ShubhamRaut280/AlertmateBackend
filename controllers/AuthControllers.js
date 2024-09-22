@@ -10,7 +10,7 @@ async function registerController (req, res){
             return res.status(400).json({'msg' : 'email and password are required'})
 
         const exists = User.findOne({email})
-        if(exists)
+        if(exists.email)
            return  res.status(400).json({'msg' : 'User already exist'})
 
 
