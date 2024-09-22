@@ -1,14 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const profile = new mongoose.Schema({
-    name : { type : String,  },
-    email : {type : String , unique : true, required : true},
-    phone : {type : Number , },
-    image_url : {type : String ,},
-    emergency : {type : Boolean, default : false },
-    family_members : { type : [String], default : [] }
-})
+const profileSchema = new mongoose.Schema({
+    name: { type: String },
+    email: { type: String, unique: true, required: true },
+    phone: { type: String },
+    image_url: { type: String },
+    emergency: { type: Boolean, default: false },
+    family_members: { type: [String], default: [] }
+});
 
-const UserProfile = new mongoose.model(profile)
+const UserProfile = mongoose.model("UserProfile", profileSchema);
 
-module.exports = {UserProfile}
+module.exports = { UserProfile };
