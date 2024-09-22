@@ -25,7 +25,7 @@ async function createUserProfile(req, res) {
     
         const userprofile = await UserProfile.findOne({email})
         if(userprofile)
-            return res.send(400).json({'msg' : `User's profile already exist, please user update api for updating the profile`})
+            return res.status(400).json({'msg' : `User's profile already exist, please user update api for updating the profile`})
 
         const profile = new UserProfile({
             email,name :  name , phone : phone,image_url:  image_url,emergency:  emergency, family_members :  family_members
@@ -43,5 +43,39 @@ async function createUserProfile(req, res) {
 
 }
 
+async function updateUserProfile(req, res){
+    try{
+        const authheader = req.header("Authorization")
+        const token = authheader.substring(7)
+        if(!token)
+            return res.status(401).json({'msg' : "Not authenticated"})
 
-module.exports = {createUserProfile}
+        const verified = await jwt.verify(token , process.env.JWT_SECRET_KEY)
+        if(!verified)
+            return res.status(401).json({'msg' : "Not authenticated"})
+
+
+        const { email, name, phone, image_url, emergency } = req.body
+        
+        UserProfile.updateOne({email : email}, {
+            $set : {
+                name : name ,
+                phone: phone,
+                image_url : image_url,
+                emergency : emergency,
+            }
+        }).then(result => {
+            return res.status(200).json({'msg' : `User details updated`, "result" : result})
+        }).catch(err =>{
+            console.log(err)
+            return res.status(500).json({'msg' : `Unable to udpate details`, 'error' : err})
+        })
+
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({'msg' : "something went wrong", 'error' : err})
+    }
+}
+
+
+module.exports = {createUserProfile, updateUserProfile}

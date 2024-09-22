@@ -11,7 +11,7 @@ async function registerController (req, res){
 
         const exists = User.findOne({email})
         if(exists)
-           return  res.status(400).json({'msg' : 'User already exist', 'user': JSON.stringify(exists)})
+           return  res.status(400).json({'msg' : 'User already exist'})
 
 
         const pass = await bcrypt.hash(password, 10)
@@ -43,7 +43,7 @@ async function loginController(req, res){
         
         // generating jwt token
         const token = jwt.sign({userId : user._id}, process.env.JWT_SECRET_KEY,{
-            expiresIn :  '24h'
+            expiresIn :  '240h'
         })
 
 
